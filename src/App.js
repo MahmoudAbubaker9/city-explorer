@@ -13,21 +13,32 @@ export class App extends Component {
       lat : {},
       lon : {},
       showMap : false,
+      errorImg : false
     }
   }
 
   exploreForm = async(event) => {
     event.preventDefault()
     const location = event.target.userInput.value;
-    const locationDetail = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_IQ_TOKEN}&q=${location}&format=json`)
-    console.log(locationDetail);
+    
+    try{
+    let locationDetail = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_IQ_TOKEN}&q=${location}&format=json`)
 
     this.setState({
       locationData: locationDetail.data[0],
       lat:locationDetail.data[0],
       lon : locationDetail.data[0],
       showMap : true,
+      errorImg : false
+      
     });
+  }
+  catch {
+    this.setState({
+    showMap : false,
+    errorImg : true
+  })
+  }
 
   }
   render() {
@@ -60,12 +71,18 @@ export class App extends Component {
           }
 
         </div>
-    {
+    { this.state.showMap &&
             <Image
             src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_IQ_TOKEN}&center=${this.state.locationData.lat},${this.state.locationData.lon}`}
             alt='map' />
           
 
+          }
+
+          { this.state.errorImg &&
+            <Image
+            src={`https://www.macademy.in/static/media/error.62518dc1.gif`}
+            alt='map' />
           }
 
 
