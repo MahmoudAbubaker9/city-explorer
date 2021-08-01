@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { Image } from 'react-bootstrap';
+import Header from './Companant/Header';
+import Footer from './Companant/Footer';
 
 export class App extends Component {
 
@@ -31,6 +33,8 @@ export class App extends Component {
   render() {
     return (
       <div>
+        <Header />
+        <br></br>
         <form onSubmit={this.exploreForm}>
           <label>
             Location :
@@ -63,7 +67,9 @@ export class App extends Component {
           
 
           }
-        
+
+
+        <Footer />
       </div>
       
     )
