@@ -21,15 +21,15 @@
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
 
-Name of feature: ________________________________
+Name of feature: Asynchronous code, and APIs
 
 Estimate of time needed to complete: 3hr
 
 Start time: 3:50
 
-Finish time: _____
+Finish time: 6:30
 
-Actual time needed to complete: _____
+Actual time needed to complete: 2:40 HR
 
 
 # Getting Started with Create React App
