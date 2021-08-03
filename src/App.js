@@ -1,9 +1,10 @@
+/* eslint-disable no-use-before-define */
 import React, { Component } from 'react'
 import axios from 'axios';
 import { Image } from 'react-bootstrap';
 import Header from './Companant/Header';
 import Footer from './Companant/Footer';
-import Weather from './Companant/Weather';
+// import Weather from './Companant/Weather';
 
 export class App extends Component {
 
@@ -24,17 +25,18 @@ export class App extends Component {
     const location = event.target.userInput.value;
     
     try{
-    let locationDetail = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_IQ_TOKEN}&q=${location}&format=json`)
-    let responseWeather = await axios.get(
-      `http://localhost:8080/weather?lon=${this.state.locationData.lon}&lat=${this.state.locationData.lat}&searchQuery=${this.state.locationData.location}`)
-
+    
+    const locationResponse = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_IQ_TOKEN}&q=${location}&format=json`);
+    let locationDetail = locationResponse.data[0];
+    let cityName = locationDetail.display_name.split(',')[0];
+    let responseWeather = await axios.get(`${process.env.REACT_APP_SERVER_URL}/Weather?searchQuery=${cityName}&lat=${locationDetail.lat}&lon=${locationDetail.lon}`);
+    // let locationData = locationResponse.data[0];
+    
     this.setState({
-      locationData: locationDetail.data[0],
-      lat:locationDetail.data[0],
-      lon : locationDetail.data[0],
+      locationData: locationDetail,
       showMap : true,
       errorImg : false,
-      weatherData:JSON.parse(responseWeather.data)
+      weatherData: responseWeather.data[0],
       
     });
   }
@@ -90,11 +92,18 @@ export class App extends Component {
             alt='map' />
           }
 
-          {
-            <Weather
-            weatherData={this.state.weatherData[0]}
-             />
-          }
+          {/* {
+            this.state.weatherData.map(wether => {
+              return(
+              <div>
+                <p> weather.valid_date
+                </p>
+                <p> weather.description
+                </p>
+              </div>
+              )
+            } )
+          } */}
 
 
         <Footer />
