@@ -33,7 +33,7 @@ export class App extends Component {
       let responseWeather = await axios.get(`${process.env.REACT_APP_SERVER_URL}/Weather?searchQuery=${cityName}&lat=${locationDetail.lat}&lon=${locationDetail.lon}`);
       // let locationData = locationResponse.data[0];
       const responseMovie = await axios.get(
-        `http://localhost:8080/movies?searchQuery=${cityName}`)
+        `http://localhost:8080/movies?searchQuery=${location}`)
 //https://api.themoviedb.org/3/search/movie?api_key=992fe12456d0d0967c74f866b0c6a03b&page=1&query=amman
       this.setState({
         locationData: locationDetail,
